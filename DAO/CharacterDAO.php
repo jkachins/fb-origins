@@ -17,11 +17,30 @@ class CharacterDAO extends AbstractGraphDAO {
      * @return NULL|\Character
      */
     public function findByID($id) {
-        $results = $this->select(array('GameID' => $id));
+        $results = $this->select(array('CharactID' => $id));
         if(!$results) { return null; }
         return $this->fillCharacter($results[0]);
     }
-	
+
+    public function findByGameID($id) {
+        $results = $this->select(array('GameID' => $id));
+        return $this->fillMultipleChar($results);
+    }
+    
+    /**
+     * Utility function to turn a result set into an array of multiple 
+     * @param type $results
+     * @return null|array
+     */
+    private function fillMultipleChar($results) {
+        if(!$results) { return null; }
+        $ret = array();
+        foreach($results as $row) {
+            array_push($ret, $this->fillCharacter($row));
+        }
+        return $ret;       
+    }
+    
     /**
      * Persists a Character into the database.  If ID is set, then it will attempt to
      * update the row with that id.

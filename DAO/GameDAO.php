@@ -1,10 +1,30 @@
 <?php 
 require_once('AbstractGraphDAO.php');
+require_once('../Object/Game.php');
 
 class GameDAO extends AbstractGraphDAO {
   
     public function getTableName() {
         return "Game";
+    }
+ 
+    public function getGamesWithDM($id) {
+        $results = $this->select(array('DM' => $id));
+        return $this->fillMultipleGames($results);
+    }
+    
+    /**
+     * Utility function to turn a result set into an array of multiple 
+     * @param type $results
+     * @return null|array
+     */
+    private function fillMultipleGames($results) {
+        if(!$results) { return null; }
+        $ret = array();
+        foreach($results as $row) {
+            array_push($ret, $this->fillGame($row));
+        }
+        return $ret;
     }
     
     /**
