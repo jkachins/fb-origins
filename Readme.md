@@ -17,6 +17,7 @@ Copy the App ID and Secret from the Facebook app settings page into your `Virtua
         ServerName myapp.localhost
         SetEnv FACEBOOK_APP_ID 12345
         SetEnv FACEBOOK_SECRET abcde
+        SetEnv CLEARDB_DATABASE_URL mysql://username:password@testingurl/database
     </VirtualHost>
 
 Restart Apache, and you should be able to visit your app at its local URL.

@@ -11,9 +11,6 @@
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
-// Connects to the MySQL Database
-require_once('dbSetup.php');
-
 // This provides access to helper functions defined in 'utils.php'
 require_once('utils.php');
 
