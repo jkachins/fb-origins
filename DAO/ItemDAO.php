@@ -1,7 +1,7 @@
 <?php
 require_once('AbstractGraphDAO.php');
 /**
- * Description of CharacterDAO
+ * Description of ItemDAO
  *
  * @author jkachins
  */
@@ -22,8 +22,12 @@ class ItemDAO extends AbstractGraphDAO {
         return $this->fillItem($results[0]);
     }
 	
-    //Always creates a new game entry in the DB
-    //Sanitize Image URL
+    /**
+     * Persists a Item into the database.  If ID is set, then it will attempt to
+     * update the row with that id.
+     * @param Item $item
+     * @return type
+     */
     public function saveOrUpdate(Item $item) {
         if(!$item->getId()) {
             return $this->insert($item->toArray());
@@ -32,6 +36,11 @@ class ItemDAO extends AbstractGraphDAO {
         }
     }
     
+    /**
+     * Turns an associative array into an Item object.
+     * @param array $arr
+     * @return null|\Item
+     */
     protected function fillItem(array $arr) {
         if(empty($arr)) return null;
         $item = new Item();

@@ -11,10 +11,10 @@ class CharacterDAO extends AbstractGraphDAO {
         return "Charact";
     }
     
-/**
-     * Return Game with the given ID, or null if it does not exist.
+    /**
+     * Return Character with the given ID, or null if it does not exist.
      * @param int $id
-     * @return Game or null
+     * @return NULL|\Character
      */
     public function findByID($id) {
         $results = $this->select(array('GameID' => $id));
@@ -22,8 +22,12 @@ class CharacterDAO extends AbstractGraphDAO {
         return $this->fillCharacter($results[0]);
     }
 	
-    //Always creates a new game entry in the DB
-    //Sanitize Image URL
+    /**
+     * Persists a Character into the database.  If ID is set, then it will attempt to
+     * update the row with that id.
+     * @param Character $character
+     * @return type
+     */
     public function saveOrUpdate(Character $character) {
         if(!$character->getId()) {
             return $this->insert($character->toArray());
@@ -32,6 +36,11 @@ class CharacterDAO extends AbstractGraphDAO {
         }
     }
     
+    /**
+     * Turns an associative array into a Character object.
+     * @param array $arr
+     * @return null|\Character
+     */
     protected function fillCharacter(array $arr) {
         if(empty($arr)) return null;
         $character = new Character();

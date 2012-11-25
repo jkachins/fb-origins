@@ -1,7 +1,20 @@
 <?php 
 require_once 'GraphObject.php';
+
+/**
+ * 
+ */
 class Item extends GraphObject {
+    /**
+     * The character ID of the character who owns this item.
+     * @var int
+     */
     private $ownerId;
+    
+    /**
+     * The # of times character owns this item.
+     * @var int
+     */
     private $quantity;
 
     public function toArray() {

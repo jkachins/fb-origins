@@ -18,8 +18,12 @@ class GameDAO extends AbstractGraphDAO {
         return $this->fillGame($results[0]);
     }
 	
-    //Always creates a new game entry in the DB
-    //Sanitize Image URL
+    /**
+     * Persists a Game into the database.  If ID is set, then it will attempt to
+     * update the row with that id.
+     * @param Game $game
+     * @return type
+     */
     public function saveOrUpdate(Game $game) {
         if(!$game->getId()) {
             return $this->insert($game->toArray());
@@ -27,7 +31,12 @@ class GameDAO extends AbstractGraphDAO {
             return $this->update($game->toArray(), $game->getId());
         }
     }
-    
+
+    /**
+     * Turns an associative array into a Game object.
+     * @param array $arr
+     * @return null|\Game
+     */
     protected function fillGame(array $arr) {
         if(empty($arr)) return null;
         $game = new Game();

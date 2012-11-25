@@ -3,8 +3,17 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/dbSetup.php');
 
 abstract class AbstractBaseDAO {
+    /**
+     * Returns the name of the table to use for SQL statements.
+     * @return String name of the table.
+     */
     public abstract function getTableName();
     
+    /**
+     * Makes a type MySQL Clean.  <code>null</code> will return the string NULL
+     * @param type $value
+     * @return string
+     */
     private function cleanSetValue($value) {
         if(isset($value)) {
             return "'".mysql_real_escape_string($value)."'";
@@ -13,6 +22,11 @@ abstract class AbstractBaseDAO {
         }
     }
     
+    /**
+     * Makes a type MySQL Clean.  <code>null</code> will return the string IS NULL
+     * @param type $value
+     * @return string
+     */
     private function cleanWhereValue($value) {
         if(isset($value)) {
             return " = ". mysql_real_escape_string($value);
@@ -21,6 +35,13 @@ abstract class AbstractBaseDAO {
         }
     }
     
+    /**
+     * Creates and executes a SQL Update Statement. Uses params to determine the
+     * columns to update and values. The column "ID" will be stripped out.
+     * @param array $params associative array, Key is the Column, value is the Value.
+     * @param type $id The Table ID to uniquely identify the row.
+     * @return type
+     */
     protected function update(array $params, $id) {
         $assignRaw = "";
         foreach($params as $key=>$value) {
@@ -34,7 +55,12 @@ abstract class AbstractBaseDAO {
         return static::executeSql($sql);
     }
 
-
+    /**
+     * Creates and executes a SQL INSERT Statement. Uses params to determine the
+     * columns to set and  there values. The column "ID" will be stripped out.
+     * @param array $params associative array, Key is the Column, value is the Value.
+     * @return type
+     */
     protected function insert(array $params) {
         $colsRaw = "";
         $valsRaw = "";
@@ -50,9 +76,9 @@ abstract class AbstractBaseDAO {
     }
     
     /**
-     * 
-     * @param array $params
-     * @return array Rows of associative arrays, one per row.
+     * Executes a SQL Select statement.  Only does equality checks.
+     * @param array $params associative array, Key is the Column, value is the Value.
+     * @return array of associative arrays.  Each assoc array is a row.
      */
     protected function select(array $params) {
         $sql = "SELECT * FROM " . $this->getTableName() . " WHERE ";
@@ -85,7 +111,10 @@ abstract class AbstractBaseDAO {
         }
         return $ret;
     }
-    
+
+    /**
+     * Uses for debugging.  Prints out SQL warnings from last query
+     */
     public static function showWarnings() {
         $warningDetailResult = mysql_query("SHOW WARNINGS");
         if ($warningDetailResult ) {
