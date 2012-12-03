@@ -32,8 +32,12 @@ class gameHttpController {
         $gameBO = new GameBO();
         $user = $this->facebook->getUser();
         //assuming a user exists is a bad idea.
-        $games = $gameBO->getGamesDMedBy($user);
-        return array('games' => $games);
+        $owned = $gameBO->getGamesDMedBy($user);
+        $played = $gameBO->getGamesPlayerIsIn($user);
+        $model = array();
+        $model['ownedGames'] = $owned;
+        $model['playedGames'] = $played;
+        return $model;
     }
 }
 

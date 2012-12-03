@@ -40,8 +40,6 @@ $facebook = new Facebook(array(
 
 $user_id = $facebook->getUser();
 
-echo $user_id;
-
 if (!$user_id) {
   header('Location: http://'. $_SERVER['HTTP_HOST']);
   exit();

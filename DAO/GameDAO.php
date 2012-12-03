@@ -13,6 +13,12 @@ class GameDAO extends AbstractGraphDAO {
         return $this->fillMultipleGames($results);
     }
     
+    public function getGamesPlayerIsIn($id) {
+        $sql = "SELECT DISTINCT G.* FROM Game G JOIN Charact C ON G.GameID = C.GameID WHERE Owner={$id}";
+        $results = $this->performJoin($sql);
+        return $this->fillMultipleGames($results);
+    }
+    
     /**
      * Utility function to turn a result set into an array of multiple 
      * @param type $results

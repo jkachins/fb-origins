@@ -19,18 +19,26 @@ $model = $controller->gameLobby();
         <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-width: 480px), only screen and (max-device-width: 480px)" type="text/css" />
     </head>
     <body>
-    <p>This is where the create button will be</p>
+        <h1>Game Lobby</h1>
+        <p>This is where the create button will be</p>
 
-    <?php if(empty($model['games'])) { ?>
-    <p> Create a game! </p>
-    <?php } else {
-        foreach($model['games'] as $game) {
-            /* @var $game Game */
-            ?>
-    <p>
-    <Strong><?= $game->getTitle(); ?>:</Strong>
-     run by (<?= $game->getDm() ?>). </p>
-    <?php }
-    } ?>
+        <h2>Games you are running</h2>
+        <?php if(empty($model['ownedGames'])) { ?>
+        <p> Create a game! </p>
+        <?php } else {
+            foreach($model['ownedGames'] as $game) {
+                /* @var $game Game */
+                ?>
+        <p>
+        <Strong><?= $game->getTitle(); ?>:</Strong>
+         run by (<?= $game->getDm() ?>). </p>
+        <?php }
+        } ?>
+        <?php if(!empty($model['playedGames'])) { ?>
+            <h2>Games you are playing</h2>
+            <?php foreach($model['playedGames'] as $game) { ?>
+                <p> Playing in <?= $game->getTitle() ?> </p>
+            <?php } ?>
+        <?php } ?>
     </body>
 </html>

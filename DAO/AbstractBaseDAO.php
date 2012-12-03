@@ -90,6 +90,13 @@ abstract class AbstractBaseDAO {
         $sql .= substr($extra, 5);
         return static::executeSql($sql);
     }
+ 
+    /**
+     * This needs to really be fixed, but doing a join seems like it will complicate things
+     */
+    protected function performJoin($sql) {
+        return static::executeSql($sql);
+    }
     
     /**
      * Actually performs the SQL on the database.  SQL is performed as-is.

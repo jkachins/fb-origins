@@ -10,7 +10,7 @@ class CharacterDAO extends AbstractGraphDAO {
     public function getTableName() {
         return "Charact";
     }
-    
+
     /**
      * Return Character with the given ID, or null if it does not exist.
      * @param int $id

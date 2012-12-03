@@ -17,6 +17,11 @@ class GameBO {
         $dao = new GameDAO();
         return $dao->getGamesWithDM($id);
     }
+    
+    public function getGamesPlayerIsIn($id) {
+        $dao = new GameDAO();
+        return $dao->getGamesPlayerIsIn($id);
+    }
 }
 
 ?>
