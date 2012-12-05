@@ -22,6 +22,11 @@ class CharacterDAO extends AbstractGraphDAO {
         return $this->fillCharacter($results[0]);
     }
 
+    /**
+     * Get all the characters in a given game
+     * @param int $id
+     * @return array Character
+     */
     public function findByGameID($id) {
         $results = $this->select(array('GameID' => $id));
         return $this->fillMultipleChar($results);

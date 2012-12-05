@@ -18,9 +18,20 @@ class GameBO {
         return $dao->getGamesWithDM($id);
     }
     
+    /**
+     * This may belong in CharacterBO.
+     * 
+     * @param int $id player fb id
+     * @return array Game
+     */
     public function getGamesPlayerIsIn($id) {
         $dao = new GameDAO();
         return $dao->getGamesPlayerIsIn($id);
+    }
+    
+    public function getPlayersInGame($id) {
+        $dao = new CharacterDAO();
+        return $dao->findByGameID($id);
     }
 }
 

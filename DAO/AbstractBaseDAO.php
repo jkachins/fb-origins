@@ -72,7 +72,8 @@ abstract class AbstractBaseDAO {
         $cols = substr($colsRaw, 1);
         $vals = substr($valsRaw, 1);
         $sql = "INSERT INTO ".$this->getTableName()."({$cols}) VALUES ({$vals})";
-        return static::executeSql($sql);
+        static::executeSql($sql);
+        return mysql_insert_id();
     }
     
     /**

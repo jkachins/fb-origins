@@ -52,7 +52,11 @@ class GameDAO extends AbstractGraphDAO {
      */
     public function saveOrUpdate(Game $game) {
         if(!$game->getId()) {
-            return $this->insert($game->toArray());
+            $gameid = $this->insert($game->toArray());
+            if(!$gameid) {
+                //Throw exception, only way insert should return 0
+            }
+            $game->setId($gameid);
         } else {
             return $this->update($game->toArray(), $game->getId());
         }
