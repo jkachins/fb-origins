@@ -89,6 +89,16 @@ class gameHttpController {
         
         return $model;
     }
+    
+    public function postToGroup() {
+        $message = $_REQUEST['message'];
+        $gameid = $_REQUEST['gameid'];
+        $model = array();
+        $model['result'] = 
+        $this->facebook->api("/182170928514884/feed", 'POST',
+                array('message'=>"Test Post from App"));
+        return $model;
+    }
 }
 
 ?>

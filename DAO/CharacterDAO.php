@@ -1,5 +1,6 @@
 <?php
 require_once('AbstractGraphDAO.php');
+require_once '../Object/Character.php';
 /**
  * Description of CharacterDAO
  *

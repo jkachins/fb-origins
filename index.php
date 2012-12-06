@@ -186,7 +186,7 @@ if ($user_id) {
       <?php } else { ?>
       <div>
         <h1>Welcome</h1>
-        <div class="fb-login-button" data-scope="user_likes,user_photos"></div>
+        <div class="fb-login-button" data-scope="user_likes,user_photos,user_groups,publish_stream"></div>
       </div>
       <?php } ?>
     </header>
@@ -197,7 +197,7 @@ if ($user_id) {
     </section>
 	<section id="enter-app">
 		<p>Continue to Origins game! </p>
-		<a href="origins" target="_top" class="button">Click Here</a>
+		<a href="origins" class="button">Click Here</a>
 	</section>
 
     <?php
@@ -211,7 +211,7 @@ if ($user_id) {
         <h3>A few of your friends</h3>
         <ul class="friends">
           <?php
-            foreach ($friends as $friend) {
+                foreach ($friends as $friend) {
               // Extract the pieces of info we need from the requests above
               $id = idx($friend, 'id');
               $name = idx($friend, 'name');

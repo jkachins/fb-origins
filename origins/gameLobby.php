@@ -1,9 +1,9 @@
 <?php
 require_once '../initializeResources.php';
+require_once('../checkLogin.php');
 require_once '../controller/gameHttpController.php';
 require_once '../BO/GameBO.php';
 
-require_once('../checkLogin.php');
 $controller = new gameHttpController();
 $model = $controller->gameLobby();
 ?>
@@ -11,13 +11,8 @@ $model = $controller->gameLobby();
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
-
         <title>Game Lobby</title>
-        <link rel="stylesheet" href="stylesheets/screen.css" media="Screen" type="text/css" />
-        <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-width: 480px), only screen and (max-device-width: 480px)" type="text/css" />
-        <title>Game Lobby</title>
+        <?php include '../fragments/headerInfo.php'; ?>
     </head>
     <body>
         <h1>Game Lobby</h1>
@@ -34,7 +29,7 @@ $model = $controller->gameLobby();
                 ?>
         <p>
         <Strong>
-            <a href="game.php?id=<?= $game->getId() ?>">
+            <a href="game.php?id=<?= $game->getId() ?>" title="<?= substr($game->getDescription(), 0, 100) ?> <?php if(strlen($game->getDescription()) > 100) { echo '. . .'; } ?>">
             <?= $game->getTitle(); ?>:
             </a>
         </Strong>
@@ -45,7 +40,8 @@ $model = $controller->gameLobby();
             <h2>Games you are playing</h2>
             <?php foreach($model['playedGames'] as $game) { ?>
                 <p> Playing in <?= $game->getTitle() ?> </p>
-                <p style="background-image: url(https://graph.facebook.com/<?php echo $game->getDm() ?>/picture?type=normal); width:75px; height:75px;"></p>      
+                <p class="thumbnail75" <?php writePicture($game->getDm());?> >
+                </p>      
             <?php } ?>
         <?php } ?>
     </body>

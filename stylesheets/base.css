@@ -94,7 +94,7 @@ header .tagline {
   background-color: #eee;
   background-image: -moz-linear-gradient(top, #fdfdfd, #eaebeb);
   background-image: -ms-linear-gradient(top, #fdfdfd, #eaebeb);
-  background-image: -o-linear-gradient(top, #fdfdfd, #eaebeb));
+  background-image: -o-linear-gradient(top, #fdfdfd, #eaebeb);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#eaebeb));
   background-image: -webkit-linear-gradient(top, #fdfdfd, #eaebeb);
   background-image: linear-gradient(top, #fdfdfd, #eaebeb);
