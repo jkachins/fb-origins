@@ -1,0 +1,12 @@
+/* 
+    Document   : general
+    Created on : Dec 6, 2012, 9:57:28 AM
+    Author     : jkachins
+    Description:
+        Site wide styles for the botf app
+*/
+
+.thumbnail75 {
+    width: 75px;
+    height: 75px;
+}

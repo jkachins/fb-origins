@@ -195,10 +195,10 @@ if ($user_id) {
       <p>Welcome to your Facebook app, running on <span>heroku</span>!</p>
       <a href="https://devcenter.heroku.com/articles/facebook" target="_top" class="button">Learn How to Edit This App</a>
     </section>
-	<section id="enter-app">
-		<p>Continue to Origins game! </p>
-		<a href="origins" class="button">Click Here</a>
-	</section>
+    <section id="enter-app">
+            <p>Continue to Origins game! </p>
+            <a href="origins" class="button">Click Here</a>
+    </section>
 
     <?php
       if ($user_id) {
