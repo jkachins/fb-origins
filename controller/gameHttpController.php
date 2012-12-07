@@ -12,18 +12,36 @@ require_once '../Object/Game.php';
 require_once '../DAO/GameDAO.php';
 require_once '../DAO/CharacterDAO.php';
 require_once '../BO/GameBO.php';
+require_once '../cache/Cache.php';
 
 class gameHttpController {
     
     private $facebook;
+    private $cache;
     
     public function __construct() {
         $this->facebook = new Facebook(array(
-  'appId'  => AppInfo::appID(),
-  'secret' => AppInfo::appSecret(),
-  'sharedSession' => true,
-  'trustForwarded' => true,
-));
+            'appId'  => AppInfo::appID(),
+            'secret' => AppInfo::appSecret(),
+            'sharedSession' => true,
+            'trustForwarded' => true,
+        ));
+        $this->cache = new Cache();
+
+        $user = $this->facebook->getUser();
+        $access_token = $this->facebook->getAccessToken();
+        
+        if(!$user) {
+            header('Location: http://'. $_SERVER['HTTP_HOST']);
+            exit();
+        } else {
+            $token = $this->cache->get($user);
+            if($token) {
+                $this->facebook->setAccessToken($token);
+            } else if($access_token != AppInfo::appToken()) {
+                $this->cache->put($user, $access_token);
+            }
+        }
     }
     
     public function createGame() {
@@ -64,6 +82,8 @@ class gameHttpController {
         $game = new Game();
         
         //ANY Sort of error handling
+        //After considering error handling, this logic
+        //will move to some other service layer
         
         $game->setDm($uid);
         $game->setDescription($_REQUEST['description']);
@@ -80,13 +100,18 @@ class gameHttpController {
     public function gameLobby() {
         $gameBO = new GameBO();
         $user = $this->facebook->getUser();
+        
         //assuming a user exists is a bad idea.
         $owned = $gameBO->getGamesDMedBy($user);
         $played = $gameBO->getGamesPlayerIsIn($user);
+        $friends = $gameBO->getFriendRunGames($this->facebook);
+
         $model = array();
         $model['ownedGames'] = $owned;
         $model['playedGames'] = $played;
-        
+        if(!empty($friends)) {
+            $model['friendsGames'] = array_diff($friends, $played);
+        }
         return $model;
     }
     

@@ -1,11 +1,11 @@
 <?php
-require_once '../initializeResources.php';
-require_once('../checkLogin.php');
 require_once '../controller/gameHttpController.php';
 require_once '../BO/GameBO.php';
+require_once '../utils.php';
 
 $controller = new gameHttpController();
 $model = $controller->gameLobby();
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +36,7 @@ $model = $controller->gameLobby();
         </p>
         <?php }
         } ?>
+        
         <?php if(!empty($model['playedGames'])) { ?>
             <h2>Games you are playing</h2>
             <?php foreach($model['playedGames'] as $game) { ?>
@@ -44,5 +45,15 @@ $model = $controller->gameLobby();
                 </p>      
             <?php } ?>
         <?php } ?>
+                
+        <?php if(!empty($model['friendsGames'])) { ?>
+            <h2>Games your friends are running</h2>
+            <?php foreach($model['friendsGames'] as $game) { ?>
+                <p> Playing in <?= $game->getTitle() ?> </p>
+                <p class="thumbnail75" <?php writePicture($game->getDm());?> >
+                </p>      
+            <?php } ?>
+        <?php } ?>
+                
     </body>
 </html>

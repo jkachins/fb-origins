@@ -1,9 +1,12 @@
 <?php
 require_once('initializeResources.php');
+require_once 'cache/Cache.php';
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
     $basic = $facebook->api('/me');
+    $cache = new Cache();
+    $cache->put($user_id, $facebook->getAccessToken());
   } catch (FacebookApiException $e) {
     // If the call fails we check if we still have a user. The user will be
     // cleared if the error is because of an invalid accesstoken
@@ -186,7 +189,7 @@ if ($user_id) {
       <?php } else { ?>
       <div>
         <h1>Welcome</h1>
-        <div class="fb-login-button" data-scope="user_likes,user_photos,user_groups,publish_stream"></div>
+        <div class="fb-login-button" data-scope="user_likes,user_photos,user_groups,publish_stream,read_friendlists"></div>
       </div>
       <?php } ?>
     </header>

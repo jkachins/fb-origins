@@ -29,7 +29,11 @@ abstract class AbstractBaseDAO {
      */
     private function cleanWhereValue($value) {
         if(isset($value)) {
-            return " = ". mysql_real_escape_string($value);
+            if(is_array($value)) {
+                return " IN ( " . implode(',', $value) . " )";
+            } else {
+                return  " = " . mysql_real_escape_string($value);;
+            }
         } else {
             return " IS NULL";
         }

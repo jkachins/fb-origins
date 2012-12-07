@@ -1,5 +1,6 @@
 <?php
 require_once '../DAO/GameDAO.php';
+require_once '../FacebookWrapper.php';
 /**
  * Description of GameBO
  *
@@ -32,6 +33,13 @@ class GameBO {
     public function getPlayersInGame($id) {
         $dao = new CharacterDAO();
         return $dao->findByGameID($id);
+    }
+    
+    public function getFriendRunGames(Facebook $facebook) {
+        $wrapper = new FacebookWrapper($facebook);
+        $ids = $wrapper->getFriendsUsingApp();
+        $dao = new GameDAO();
+        return $dao->getGamesWithDM($ids);
     }
 }
 

@@ -31,6 +31,13 @@ class AppInfo {
   }
 
   /**
+   * @return the app token
+   */
+  public static function appToken() {
+      return static::appID().'|'.static::appSecret();
+  }
+  
+  /**
    * @return the url
    */
   public static function getUrl($path = '/') {

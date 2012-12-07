@@ -45,7 +45,4 @@ if (!$user_id) {
   exit();
 }
 
-function writePicture($id) {
-    echo ' style="background-image: url(https://graph.facebook.com/'.$id.'/picture?type=normal);" ';
-}
 ?>
