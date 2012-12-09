@@ -26,6 +26,12 @@ $model = $controller->viewGame();
         <p>
             <?= $model['game']->getDescription() ?>
         </p>
+        <div>
+            Run by <br/>
+            <a href="https://facebook.com/<?= $model['game']->getDm(); ?>">
+                <?php writeImage($model['game']->getDm()); ?>
+            </a>
+        </div>
         
         <form id="form">
             <input type="hidden" name="id" value="<?= $model['game']->getId() ?>"/>

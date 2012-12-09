@@ -14,3 +14,7 @@ function he($str) {
 function writePicture($id) {
     echo ' style="background-image: url(https://graph.facebook.com/'.$id.'/picture?type=normal);" ';
 }
+
+function writeImage($id) {
+    echo '<img class="thumbnail75" src="https://graph.facebook.com/'.$id.'/picture?type=normal" />';
+}

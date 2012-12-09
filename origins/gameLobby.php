@@ -41,15 +41,18 @@ $model = $controller->gameLobby();
         
         <?php if(!empty($model['playedGames'])) { ?>
             <h2>Games you are playing</h2>
+            <table>
             <?php foreach($model['playedGames'] as $game) { ?>
-                <p> Playing in 
+                <tr>
+                <td> Playing in 
                 <a href="game.php?id=<?= $game->getId() ?>" title="<?= substr($game->getDescription(), 0, 100) ?> <?php if(strlen($game->getDescription()) > 100) { echo '. . .'; } ?>">
                 <?= $game->getTitle() ?>
                 </a>
-                </p>
-                <p class="thumbnail75" <?php writePicture($game->getDm());?> >
-                </p>      
+                </td>
+                <td class="thumbnail75" <?php writePicture($game->getDm());?> ></td>
+                </tr>
             <?php } ?>
+            </table>
         <?php } ?>
                 
         <?php if(!empty($model['friendsGames'])) { ?>
