@@ -6,8 +6,8 @@
  * @author jkachins
  */
 
-require_once ('../sdk/src/facebook.php');
-require_once('../AppInfo.php');
+require_once '../sdk/src/facebook.php';
+require_once '../AppInfo.php';
 require_once '../Object/Game.php';
 require_once '../DAO/GameDAO.php';
 require_once '../DAO/CharacterDAO.php';
@@ -48,6 +48,22 @@ class gameHttpController {
         
     }
     
+    private function createAwardsArray() {
+        $values = array();
+        foreach($_REQUEST as $key=>$value) {
+            if(substr($key,0,5) == "char_") {
+                $values[substr($key,5)] = $value;
+            }
+        }
+        return $values;
+    }
+
+    private function runUpdates($game) {
+        $awards = $this->createAwardsArray();
+        $gameBO = new GameBO();
+        $gameBO->awardXP($game, $awards);
+    }
+    
     public function viewGame() {
         if(!isset($_REQUEST['id'])) {
             //Crap error handling
@@ -55,11 +71,11 @@ class gameHttpController {
         }
         $id = $_REQUEST['id'];
         $gameDAO = new GameDAO();
+        $charDAO = new CharacterDAO();
         $game = $gameDAO->findByID($id);
         
-        //Needs Error Handling!
-        if(!$game) {
-            //Shunt off to error page?
+        if(isset($_REQUEST['submit'])) {
+            $this->runUpdates($game);
         }
         
         /* @var $game Game */
@@ -72,6 +88,9 @@ class gameHttpController {
             $model['dm']=true;
             $gameBO = new GameBO();
             $model['characters'] = $gameBO->getPlayersInGame($id);
+        } else {
+            $char = $charDAO->findByGameAndPlayer($id, $userId);
+            $model['my_char'] = $char;
         }
         
         return $model;

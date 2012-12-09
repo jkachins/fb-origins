@@ -23,8 +23,8 @@ require_once '../checkLogin.php';
         <form action="registerGame.php" method="GET">
             <label for="title">Game Name:</label>
             <input id="title" type="text" name="title"/><br/>
-            <label for="image">Image URL:</label>
-            <input id="image" type="text" name="image"/><br/> 
+<!--            <label for="image">Image URL:</label>
+            <input id="image" type="text" name="image"/><br/> -->
             <label for="description">Description: </label>
             <textarea name="description" id="description"></textarea><br/>
             <input type="submit" name="submit" value="Create Game"/>

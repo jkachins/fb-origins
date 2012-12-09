@@ -30,6 +30,11 @@ class GameBO {
         return $dao->getGamesPlayerIsIn($id);
     }
     
+    /**
+     * Return all the characters that are playing in a given game.
+     * @param int $id GameID
+     * @return array Character
+     */
     public function getPlayersInGame($id) {
         $dao = new CharacterDAO();
         return $dao->findByGameID($id);
@@ -40,6 +45,20 @@ class GameBO {
         $ids = $wrapper->getFriendsUsingApp();
         $dao = new GameDAO();
         return $dao->getGamesWithDM($ids);
+    }
+    
+    public function awardXP($game, $values) {
+        $characters = $this->getPlayersInGame($game->getId());
+        $charDAO = new CharacterDAO();
+        foreach($characters as $char) {
+            if(array_key_exists($char->getId(), $values)) {
+                /* @var $char Character */
+                $xp = $char->getXp();
+                $xp += $values[$char->getId()];
+                $char->setXp($xp);
+                $charDAO->saveOrUpdate($char);
+            }
+        }
     }
 }
 

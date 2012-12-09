@@ -15,9 +15,11 @@ $model = $controller->gameLobby();
         <?php include '../fragments/headerInfo.php'; ?>
     </head>
     <body>
+        <div id="fb-root"></div>
+        <?php include '../fragments/facebook-sdk.php'; ?>
         <h1>Game Lobby</h1>
         <p>
-            <a href="createGame.php">Create Game</a>
+            <a href="createGame.php">Create Game</a><br/>
         </p>
 
         <h2>Games you are running</h2>
@@ -40,7 +42,11 @@ $model = $controller->gameLobby();
         <?php if(!empty($model['playedGames'])) { ?>
             <h2>Games you are playing</h2>
             <?php foreach($model['playedGames'] as $game) { ?>
-                <p> Playing in <?= $game->getTitle() ?> </p>
+                <p> Playing in 
+                <a href="game.php?id=<?= $game->getId() ?>" title="<?= substr($game->getDescription(), 0, 100) ?> <?php if(strlen($game->getDescription()) > 100) { echo '. . .'; } ?>">
+                <?= $game->getTitle() ?>
+                </a>
+                </p>
                 <p class="thumbnail75" <?php writePicture($game->getDm());?> >
                 </p>      
             <?php } ?>

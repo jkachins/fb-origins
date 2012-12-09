@@ -12,6 +12,15 @@ class CharacterDAO extends AbstractGraphDAO {
         return "Charact";
     }
 
+    public function findByGameAndPlayer($gameId, $playerId) {
+        $results = $this->select(array(
+            "Owner" => $playerId,
+            "GameID" => $gameId)
+        );
+        if(!$results) { return null; }
+        return $this->fillCharacter($results[0]);
+    }
+    
     /**
      * Return Character with the given ID, or null if it does not exist.
      * @param int $id
@@ -71,6 +80,7 @@ class CharacterDAO extends AbstractGraphDAO {
         $character = new Character();
         $character->setXp($arr['xp']);
         $character->setOwner($arr['Owner']);
+        $character->setGameId($arr['GameID']);
         
         $this->fillGraphObject($arr, $character);
         return $character;
