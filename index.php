@@ -1,6 +1,12 @@
 <?php
+
+
 require_once('initializeResources.php');
 require_once 'cache/Cache.php';
+if(isset($_REQUEST['request_ids'])) {
+    header('Location: '. AppInfo::getUrl('/origins/invitations.php?request_ids='.$_REQUEST['request_ids']));
+    exit();
+}
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
@@ -197,20 +203,16 @@ if ($user_id) {
       <?php } ?>
     </header>
 
-    <section id="get-started">
-      <p>Welcome to your Facebook app, running on <span>heroku</span>!</p>
-      <a href="https://devcenter.heroku.com/articles/facebook" target="_top" class="button">Learn How to Edit This App</a>
-    </section>
-    <section id="enter-app">
-            <p>Continue to Origins game! </p>
-            <a href="origins" class="button">Click Here</a>
+    <section id="enter-app" class="clearfix" style="margin:auto auto; width: 200px;">
+            <a href="origins" class="button">Game Lobby</a>
+            <a href="origins/invitations.php" class="button">Invitations</a>
     </section>
 
     <?php
       if ($user_id) {
     ?>
 
-    <section id="samples" class="clearfix">
+    <section id="samples" class="clearfix" style="display:none;">
       <h1>Examples of the Facebook Graph API</h1>
 
       <div class="list">
@@ -306,32 +308,5 @@ if ($user_id) {
       }
     ?>
 
-    <section id="guides" class="clearfix">
-      <h1>Learn More About Heroku &amp; Facebook Apps</h1>
-      <ul>
-        <li>
-          <a href="https://www.heroku.com/?utm_source=facebook&utm_medium=app&utm_campaign=fb_integration" target="_top" class="icon heroku">Heroku</a>
-          <p>Learn more about <a href="https://www.heroku.com/?utm_source=facebook&utm_medium=app&utm_campaign=fb_integration" target="_top">Heroku</a>, or read developer docs in the Heroku <a href="https://devcenter.heroku.com/" target="_top">Dev Center</a>.</p>
-        </li>
-        <li>
-          <a href="https://developers.facebook.com/docs/guides/web/" target="_top" class="icon websites">Websites</a>
-          <p>
-            Drive growth and engagement on your site with
-            Facebook Login and Social Plugins.
-          </p>
-        </li>
-        <li>
-          <a href="https://developers.facebook.com/docs/guides/mobile/" target="_top" class="icon mobile-apps">Mobile Apps</a>
-          <p>
-            Integrate with our core experience by building apps
-            that operate within Facebook.
-          </p>
-        </li>
-        <li>
-          <a href="https://developers.facebook.com/docs/guides/canvas/" target="_top" class="icon apps-on-facebook">Apps on Facebook</a>
-          <p>Let users find and connect to their friends in mobile apps and games.</p>
-        </li>
-      </ul>
-    </section>
   </body>
 </html>

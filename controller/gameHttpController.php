@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of gameHttpController
- *
- * @author jkachins
- */
-
 require_once '../sdk/src/facebook.php';
 require_once '../AppInfo.php';
 require_once '../Object/Game.php';
@@ -14,6 +8,12 @@ require_once '../DAO/CharacterDAO.php';
 require_once '../BO/GameBO.php';
 require_once '../cache/Cache.php';
 
+/**
+ * Class for dealing with computation needed for Game related pages.
+ * This should be used to get REQUEST variables and sending them to service layer.
+ *
+ * @author jkachins
+ */
 class gameHttpController {
     
     private $facebook;
@@ -43,7 +43,11 @@ class gameHttpController {
             }
         }
     }
-    
+
+    /**
+     * I don't think the page with the Create Game prompt requires any 
+     * computation.  Yet.
+     */
     public function createGame() {
         
     }
@@ -58,12 +62,22 @@ class gameHttpController {
         return $values;
     }
 
+    /**
+     * Read through the individually assigned XP and assign them to players.
+     * @param Game $game
+     */
+    
+    //TODO: Add base XP as default param with value = 0
     private function runUpdates($game) {
         $awards = $this->createAwardsArray();
         $gameBO = new GameBO();
         $gameBO->awardXP($game, $awards);
     }
     
+    /**
+     * When viewing a game, determine if DM or player, get character information
+     * @return array
+     */
     public function viewGame() {
         if(!isset($_REQUEST['id'])) {
             //Crap error handling
@@ -95,7 +109,11 @@ class gameHttpController {
         
         return $model;
     }
-    
+ 
+    /**
+     * Actually creates a game.
+     * @return \Game
+     */
     public function registerGame() {
         $uid = $this->facebook->getUser();
         $game = new Game();
@@ -116,6 +134,11 @@ class gameHttpController {
         return $model;
     }
     
+    /**
+     * Get games that the user is running, that the user is in, and that the 
+     * user's friends are running.
+     * @return Array
+     */
     public function gameLobby() {
         $gameBO = new GameBO();
         $user = $this->facebook->getUser();
@@ -134,6 +157,11 @@ class gameHttpController {
         return $model;
     }
     
+    /**
+     * Pretty much just a test shell for now.  
+     * Probably will be moved to a service layer later
+     * @return type
+     */
     public function postToGroup() {
         $message = $_REQUEST['message'];
         $gameid = $_REQUEST['gameid'];

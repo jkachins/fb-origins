@@ -22,9 +22,8 @@ class FacebookWrapper {
             return array();
         }
         
-        $friends = $results['data'];
         $return = array();
-        foreach($friends as $friend) {
+        foreach($results as $friend) {
             array_push($return, $friend['uid']);
         }
         return $return;

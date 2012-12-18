@@ -12,7 +12,9 @@ $model = $controller->viewGame();
 <html>
     <head>
         <title>Game</title>
+        <script type="text/javascript" src="/javascript/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="/javascript/game.js"></script>
+        <script type="text/javascript" src="/javascript/FacebookInit.php"></script>
         <?php include '../fragments/headerInfo.php'?>
     </head>
     <body>
@@ -28,7 +30,7 @@ $model = $controller->viewGame();
         </p>
         <div>
             Run by <br/>
-            <a href="https://facebook.com/<?= $model['game']->getDm(); ?>">
+            <a target="_top" href="https://facebook.com/<?= $model['game']->getDm(); ?>">
                 <?php writeImage($model['game']->getDm()); ?>
             </a>
         </div>
@@ -37,16 +39,26 @@ $model = $controller->viewGame();
             <input type="hidden" name="id" value="<?= $model['game']->getId() ?>"/>
             <?php if(isset($model['dm'])) { ?>
                 <h2>DM Options</h2>
+                
+                <a href="#" class="facebook-button apprequests" id="sendRequest" data-data="<?= $model['game']->getId(); ?>" data-message="Join this game I'm running!" onclick="sendRequest();">
+                    <span class="apprequests">Send Requests</span>
+                </a>
+                
+                <table>
+                    <tr><th>Character</th><th>XP</th><th>Give XP</th></tr>
                 <?php 
                     if(isset($model['characters'])) {
                         foreach ($model['characters'] as $character) { 
                         /* @var $character Character */ ?>
-                        <p><?= $character->getTitle();?> : <?=$character->getXp();?>
-                           <input type="text" name="char_<?= $character->getId(); ?>"
-                                  id="char_<?= $character->getId(); ?>"/>
-                        </p>
+                        <tr>
+                            <td><?= $character->getTitle();?></td>
+                            <td><?=$character->getXp();?></td>
+                            <td><input type="text" name="char_<?= $character->getId(); ?>"
+                                      id="char_<?= $character->getId(); ?>"/></td>
+                        </tr>
                     <?php } ?>
                 <?php } ?>
+                </table>
                 <input type="submit" name="submit" value="award"/>
             <?php } ?>
 

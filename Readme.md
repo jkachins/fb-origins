@@ -18,23 +18,57 @@ Copy the App ID and Secret from the Facebook app settings page into your `Virtua
         SetEnv FACEBOOK_APP_ID 12345
         SetEnv FACEBOOK_SECRET abcde
         SetEnv CLEARDB_DATABASE_URL mysql://username:password@testingurl/database
+        SetEnv MEMCACHIER_PASSWORD memcachePassword
+	SetEnv MEMCACHIER_SERVERS dev1.ec2.memcachier.com:11211
+	SetEnv MEMCACHIER_USERNAME memcacheUser
+	
     </VirtualHost>
 
 Restart Apache, and you should be able to visit your app at its local URL.
 
-Deploy to Heroku via Facebook integration
------------------------------------------
+STYLE
+Using something of an MVC pattern.  Controllers stored in the controller folder.
+Models are stored in the Object folder.  Views are stored in the origins folder.
+Controllers are actually just adapters (should be renamed), and get information
+from requests and convert it into internal objects to send to the service layer.
+These services actually modify the data and do the heavy processing, and live in
+the BO folder.  The data is actually modified in the Datbase through the DAO
+classes.  Right now, the BO layer may be a bit inflated, and more logic should
+rightfully be in the model objects.
+**I haven't moved this yet since I don't want any DAO logic living in my models**
 
-The easiest way to deploy is to create an app on Facebook and click Cloud Services -> Get Started, then choose PHP from the dropdown.  You can then `git clone` the resulting app from Heroku.
+Each view should start off by creating an appropriate controller and calling a
+single method from it.  This should return an associative array that contains
+all the information that needs to be used in the view.  Any page that requires a
+login should use the "checkLogin" fragment.
 
-Deploy to Heroku directly
--------------------------
+FOLDERS
+-BO: Service Layer, performs computation and provides access to the DAO.
+-DAO: Data Access layer, communicates with the Database.
+-Cache: Just Memcache and Memcache warpper stuff.
+-Controller: Handles getting information from a request type, and sending information back.
+-facebook: I honestly don't know.
+-fragments: used for fragments of view code that can be included across multiple views.
+-origins: The HTTP web views.
+-SDK: Facebook PHP SDK.  Best not to touch.
+-Stylesheets: Cascade Style Sheets
+-javascript: javascript
 
-If you prefer to deploy yourself, push this code to a new Heroku app on the Cedar stack, then copy the App ID and Secret into your config vars:
 
-    heroku create --stack cedar
-    git push heroku master
-    heroku config:add FACEBOOK_APP_ID=12345 FACEBOOK_SECRET=abcde
+TODO
+-I don't like Cache living alone at the top.
+-Unit Tests should exist for almost every public method.
+-Organize Folder structure with more nested folders in Controllers and Views.
+-Organize loose files
+-Finish off requests to invite players to game.
+-Post to groups or send individual messages based on game or character.
 
-Enter the URL for your Heroku app into the Website URL section of the Facebook app settings page, hen you can visit your app on the web.
-
+LONG VISION
+-Add a private/public option for games to display to public or friends or just invited.
+-Add inventory based off of Item framework that exists.
+-Use some CSS
+-Add javascript and AJAX to create more responsive/interactive interface
+-Solidify Public/Internal API
+-Go Mobile.
+-Add images.
+-Use the Open Graph API

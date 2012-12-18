@@ -21,13 +21,28 @@ require_once '../checkLogin.php';
         <h1>Create Game</h1>
         
         <form action="registerGame.php" method="GET">
-            <label for="title">Game Name:</label>
-            <input id="title" type="text" name="title"/><br/>
-<!--            <label for="image">Image URL:</label>
-            <input id="image" type="text" name="image"/><br/> -->
-            <label for="description">Description: </label>
-            <textarea name="description" id="description"></textarea><br/>
+            <table>
+                <tr>
+                    <td>
+                        <label for="title">Game Name:</label>
+                    </td>
+                    <td>
+                        <input id="title" type="text" name="title"/><br/>
+                    </td>
+                </tr>
+                    <!--            <label for="image">Image URL:</label>
+                    <input id="image" type="text" name="image"/><br/> -->
+                <tr>
+                    <td>
+                        <label for="description">Description: </label>
+                    </td>
+                    <td>
+                        <textarea name="description" id="description"></textarea><br/>
+                    </td>
+                </tr>
+            </table>
             <input type="submit" name="submit" value="Create Game"/>
+            </table>
         </form>
     </body>
 </html>

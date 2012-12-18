@@ -42,10 +42,10 @@ $model = $controller->gameLobby();
         <?php if(!empty($model['playedGames'])) { ?>
             <h2>Games you are playing</h2>
             <table>
+                <tr><th>Game</th><th>Run By</th></tr>
             <?php foreach($model['playedGames'] as $game) { ?>
                 <tr>
-                <td> Playing in 
-                <a href="game.php?id=<?= $game->getId() ?>" title="<?= substr($game->getDescription(), 0, 100) ?> <?php if(strlen($game->getDescription()) > 100) { echo '. . .'; } ?>">
+                <td><a href="game.php?id=<?= $game->getId() ?>" title="<?= substr($game->getDescription(), 0, 100) ?> <?php if(strlen($game->getDescription()) > 100) { echo '. . .'; } ?>">
                 <?= $game->getTitle() ?>
                 </a>
                 </td>
